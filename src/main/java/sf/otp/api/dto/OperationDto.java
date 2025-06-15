@@ -1,4 +1,8 @@
 package sf.otp.api.dto;
 
-public record OperationDto() {
+import java.util.UUID;
+
+public record OperationDto(
+        UUID id
+) {
 }

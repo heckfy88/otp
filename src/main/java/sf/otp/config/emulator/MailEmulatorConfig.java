@@ -1,4 +1,4 @@
-package com.fladx.otpservice.config;
+package sf.otp.config.emulator;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetupTest;

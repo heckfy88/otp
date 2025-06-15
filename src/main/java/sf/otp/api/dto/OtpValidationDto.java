@@ -1,4 +1,9 @@
 package sf.otp.api.dto;
 
-public record OtpValidationDto() {
+import java.util.UUID;
+
+public record OtpValidationDto(
+        String code,
+        UUID operationId
+) {
 }

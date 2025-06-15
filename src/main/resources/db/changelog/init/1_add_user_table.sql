@@ -14,13 +14,16 @@ create table otp.user
     created_at    timestamp           not null default now(),
     is_active     boolean             not null default true,
 
-    constraint pk_user primary key (id)
+    constraint pk_user primary key (id),
+    constraint chk_user_role check (role in ('USER', 'ADMIN'))
 );
+
+create unique index unique_admin_user on otp.user (role) where role = 'ADMIN';
 
 comment on table otp.user is 'Пользователи';
 
 comment on column otp.user.id is 'Идентификатор пользователя';
-comment on column otp.user.name is 'Имя пользователя';
+comment on column otp.user.username is 'Имя пользователя';
 comment on column otp.user.role is 'Роль пользователя';
 comment on column otp.user.email is 'Электронная почта пользователя';
 comment on column otp.user.phone_number is 'Номер телефона пользователя';

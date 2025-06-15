@@ -1,4 +1,4 @@
-package sf.financialreports.config.security;
+package sf.otp.config.security;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.JWKSet;

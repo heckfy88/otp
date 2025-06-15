@@ -1,5 +1,12 @@
 package sf.otp.api.dto;
 
-public record OtpTokenRsDto(
+import sf.otp.dao.domain.OtpToken;
+
+public record OtpTokenDto(
     String code
-) {}
+) {
+
+    public OtpTokenDto(OtpToken token) {
+        this(token.getCode());
+    }
+}

@@ -1,6 +1,5 @@
-package com.fladx.otpservice.config;
+package sf.otp.config.emulator;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.smpp.Connection;
 import org.smpp.Session;
@@ -8,7 +7,6 @@ import org.smpp.TCPIPConnection;
 import org.smpp.pdu.BindRequest;
 import org.smpp.pdu.BindResponse;
 import org.smpp.pdu.BindTransmitter;
-import org.smpp.pdu.SubmitSM;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,6 +59,4 @@ public class SmppEmulatorConfig {
 
         return null;
     }
-
-
 }

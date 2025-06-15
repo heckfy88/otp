@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: otp
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ruslanagaev
+    password: 1978
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: public
+  mail:
+    from: ${EMAIL_FROM:otp@localhost}
+    host: localhost
+    port: 8083
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+jwt:
+  secret: ${JWT_SECRET:thisisaverylongsecretkeywithenoughlength!!}
+  issuer: ${JWT_ISSUER:otp}
+  expiration: 1 # hour
+  key-id: my-hs256-key
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN}
+
+smpp:
+  host: localhost
+  port: 8082
+  system_id: smppclient1
+  password: password
+  system_type: OTP
+  source_addr: OTPService

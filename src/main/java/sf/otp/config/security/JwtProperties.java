@@ -1,4 +1,4 @@
-package sf.financialreports.config.security;
+package sf.otp.config.security;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

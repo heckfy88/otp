@@ -1,5 +1,5 @@
 package sf.otp.api.dto;
 
-public record TokenDto(
+public record JwtDto(
         String token
 ) { }

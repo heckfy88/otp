@@ -1,4 +1,4 @@
-package sf.financialreports.config.security;
+package sf.otp.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -30,9 +31,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/v3/**").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/v1/user/register").permitAll()
+                        .requestMatchers("/api/v1/user/login").permitAll()
+                        .requestMatchers("/api/v1/user").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/user/**").hasRole("ADMIN")
+
+                        .requestMatchers("/api/v1/otp/config").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -41,7 +46,7 @@ public class SecurityConfig {
                                 .authenticationEntryPoint(authenticationEntryPoint)
                                 .jwt(jwt -> jwt
                                         .decoder(jwtDecoder)
-                                        .jwtAuthenticationConverter(new JwtAuthenticationConverter()) // optional, can customize
+                                        .jwtAuthenticationConverter(jwtAuthenticationConverter()) // optional, can customize
                                 )
                 )
                 .build();
@@ -55,5 +60,16 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("role");
+
+        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+        jwtConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return jwtConverter;
     }
 }
